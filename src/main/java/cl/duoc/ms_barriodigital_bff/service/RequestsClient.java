@@ -1,9 +1,11 @@
 package cl.duoc.ms_barriodigital_bff.service;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +42,22 @@ public class RequestsClient {
                 .body(body)
                 .retrieve()
                 .toEntity(Object.class);
+    }
+
+    /**
+     * ms-requests no filtra por vecino, asi que se trae la lista completa y se filtra aqui.
+     */
+    public ResponseEntity<Object> listarPorVecino(String email) {
+        List<Map<String, Object>> todas = restClient.get()
+                .uri("/api/requests")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<Map<String, Object>>>() {});
+
+        List<Map<String, Object>> delVecino = (todas == null ? List.<Map<String, Object>>of() : todas).stream()
+                .filter(solicitud -> email.equalsIgnoreCase(String.valueOf(solicitud.get("vecinoEmail"))))
+                .toList();
+
+        return ResponseEntity.ok(delVecino);
     }
 
     public ResponseEntity<Object> listar(String status) {
