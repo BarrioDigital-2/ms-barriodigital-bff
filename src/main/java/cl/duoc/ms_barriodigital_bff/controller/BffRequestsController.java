@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/bff/requests")
+@RequestMapping("/api/v1/bff/requests")
 public class BffRequestsController {
 
     /** Claims donde Azure AD puede traer el email del usuario, en orden de preferencia. */

@@ -23,7 +23,7 @@ public class RequestsClient {
 
     public ResponseEntity<Object> crear(Map<String, Object> body) {
         return restClient.post()
-                .uri("/api/requests")
+                .uri("/api/v1/requests")
                 .body(body)
                 .retrieve()
                 .toEntity(Object.class);
@@ -31,14 +31,14 @@ public class RequestsClient {
 
     public ResponseEntity<Object> obtenerPorId(Long id) {
         return restClient.get()
-                .uri("/api/requests/{id}", id)
+                .uri("/api/v1/requests/{id}", id)
                 .retrieve()
                 .toEntity(Object.class);
     }
 
     public ResponseEntity<Object> cambiarEstado(Long id, Map<String, Object> body) {
         return restClient.put()
-                .uri("/api/requests/{id}/status", id)
+                .uri("/api/v1/requests/{id}/status", id)
                 .body(body)
                 .retrieve()
                 .toEntity(Object.class);
@@ -49,7 +49,7 @@ public class RequestsClient {
      */
     public ResponseEntity<Object> listarPorVecino(String email) {
         List<Map<String, Object>> todas = restClient.get()
-                .uri("/api/requests")
+                .uri("/api/v1/requests")
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<Map<String, Object>>>() {});
 
@@ -61,7 +61,7 @@ public class RequestsClient {
     }
 
     public ResponseEntity<Object> listar(String status) {
-        String uri = (status != null) ? "/api/requests?status={status}" : "/api/requests";
+        String uri = (status != null) ? "/api/v1/requests?status={status}" : "/api/v1/requests";
         return restClient.get()
                 .uri(uri, status)
                 .retrieve()

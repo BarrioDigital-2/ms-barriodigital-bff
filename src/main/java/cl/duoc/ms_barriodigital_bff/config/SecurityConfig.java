@@ -46,7 +46,7 @@ public class SecurityConfig {
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/health").permitAll()
-                .requestMatchers("/api/bff/requests/**").hasAnyRole("Admin", "Funcionario", "Vecino", "Auditor")
+                .requestMatchers("/api/v1/bff/requests/**").hasAnyRole("Admin", "Funcionario", "Vecino", "Auditor")
                 .anyRequest().authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2
